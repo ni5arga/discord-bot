@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import aiohttp
 
-class Anime(commands.Cog):
+class Waifu(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -172,4 +172,4 @@ class Anime(commands.Cog):
         await self.fetch_image(ctx, 'cringe')
 
 def setup(bot):
-    bot.add_cog(Anime(bot))
+    bot.add_cog(Waifu(bot))
