@@ -154,5 +154,47 @@ class Moderation(commands.Cog):
         else:
             await ctx.send(f"An error occurred: {error}")
 
+
+    @commands.command()
+    @commands.has_permissions(manage_messages=True)
+    async def purge(self, ctx, limit: int):
+        """Delete a specified number of messages in the current channel."""
+        try:
+            await ctx.channel.purge(limit=limit + 1)  # +1 to include the purge command message
+            await ctx.send(f"Deleted {limit} messages.", delete_after=5)
+        except discord.Forbidden:
+            await ctx.send("I don't have permission to delete messages.")
+        except discord.HTTPException:
+            await ctx.send("An error occurred while deleting messages.")
+
+    @purge.error
+    async def purge_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send("You don't have the required permissions to use this command.")
+        else:
+            await ctx.send(f"An error occurred: {error}")
+
+    @commands.command()
+    @commands.has_permissions(manage_messages=True)
+    async def delete(self, ctx, message_id: int):
+        """Delete a specific message by its ID in the current channel."""
+        try:
+            message = await ctx.channel.fetch_message(message_id)
+            await message.delete()
+            await ctx.send("Message deleted.", delete_after=5)
+        except discord.NotFound:
+            await ctx.send("Message not found.")
+        except discord.Forbidden:
+            await ctx.send("I don't have permission to delete the message.")
+        except discord.HTTPException:
+            await ctx.send("An error occurred while deleting the message.")
+
+    @delete.error
+    async def delete_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send("You don't have the required permissions to use this command.")
+        else:
+            await ctx.send(f"An error occurred: {error}")         
+
 def setup(bot):
     bot.add_cog(Moderation(bot))
