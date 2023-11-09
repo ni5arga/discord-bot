@@ -7,6 +7,7 @@ class Avatar(commands.Cog):
 
     @commands.command(aliases=["avatar", "av"])
     async def get_avatar(self, ctx, user: discord.Member = None):
+        """Get a user's avatar."""
         user = user or ctx.author
         avatar_url = user.avatar_url_as(size=1024)
 
