@@ -50,7 +50,7 @@ class Pokemon(commands.Cog):
         for stat, value in stats.items():
             embed.add_field(name=stat, value=value, inline=True)
 
-        embed.set_thumbnail(url=self.get_pokemon_image_url(id_number))
+        embed.set_image(url=self.get_pokemon_image_url(id_number))
         return embed
 
     def get_pokemon_image_url(self, id_number):
