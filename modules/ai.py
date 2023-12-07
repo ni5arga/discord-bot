@@ -1,41 +1,40 @@
 import discord
 from discord.ext import commands
+import random
 import requests
-import os
 
-from dotenv import load_dotenv  
-load_dotenv()
-
-BRAINSHOP_URL = os.environ.get('BRAINSHOP_URL')
-
-class AI(commands.Cog):
+class Ship(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.brainshop_api_url = BRAINSHOP_URL
 
     @commands.command()
-    async def ai(self, ctx, *, question):
-        """Ask a question to the AI"""
-        try:
-            if self.brainshop_api_url is None:
-                await ctx.send("BRAINSHOP_URL environment variable not set.")
-                return
+    async def ship(self, ctx, user1: discord.Member = None, user2: discord.Member = None):
+        """Ship two users and show their love percentage."""
+        if user1 is None and user2 is None:
+            member_list = ctx.guild.members
+            user2 = random.choice(member_list)
+            while user2 == ctx.author:
+                user2 = random.choice(member_list)
 
-            params = {
-                'uid': ctx.author.id,
-                'msg': question,
-            }
+        elif user1 is not None and user2 is None:
+            user2 = ctx.author
 
-            response = requests.get(self.brainshop_api_url, params=params)
+        percentage = random.randint(0, 100)
+        
+        hug_api_url = "https://api.waifu.pics/sfw/hug"
+        response = requests.get(hug_api_url)
+        hug_gif_url = response.json()["url"]
 
-            if response.status_code == 200:
-                data = response.json()
-                answer = data.get('cnt', 'No response from AI.')
-                await ctx.send(answer)
-            else:
-                await ctx.send("Error fetching response from AI.")
-        except requests.exceptions.RequestException as e:
-            await ctx.send(f"Error making request to AI: {e}")
+        ship_embed = discord.Embed(
+            title=f"💖 Shipping {user1.display_name} and {user2.display_name}! 💖",
+            color=discord.Color.magenta()
+        )
+        ship_embed.add_field(name="Love Percentage", value=f"{percentage}%")
+        ship_embed.set_footer(text="UwU <3")
+
+        ship_embed.set_image(url=hug_gif_url)
+
+        await ctx.send(embed=ship_embed)
 
 def setup(bot):
-    bot.add_cog(AI(bot))
+    bot.add_cog(Ship(bot))
