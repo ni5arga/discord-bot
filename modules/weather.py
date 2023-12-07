@@ -2,11 +2,11 @@ import discord
 from discord.ext import commands
 import pyowm
 import os
+from dotenv import load_dotenv
 
-from dotenv import load_dotenv  
 load_dotenv()
 
-OWM_API_KEY = os.environ["OWM_API_KEY"]  
+OWM_API_KEY = os.environ["OWM_API_KEY"]
 
 class Weather(commands.Cog):
     def __init__(self, bot):
@@ -17,13 +17,13 @@ class Weather(commands.Cog):
     async def weather(self, ctx, *, location):
         """Get current weather information. Usage- !weather location"""
         try:
-            observation = self.owm.weather_at_place(location)
-            w = observation.get_weather()
+            observation = self.owm.weather_manager().weather_at_place(location)
+            w = observation.weather
 
-            temperature = w.get_temperature('celsius')['temp']
-            status = w.get_status()
-            humidity = w.get_humidity()
-            wind_speed = w.get_wind()['speed']
+            temperature = w.temperature('celsius')['temp']
+            status = w.status
+            humidity = w.humidity
+            wind_speed = w.wind()['speed']
 
             embed = discord.Embed(color=discord.Color.blue())
             embed.title = f"Weather in {location}"
