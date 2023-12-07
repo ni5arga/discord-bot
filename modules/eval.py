@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 import traceback
 import os
+from dotenv import load_dotenv  
+load_dotenv()
 
 SUDO_USER_ID = os.environ['SUDO_USER_ID']
 
