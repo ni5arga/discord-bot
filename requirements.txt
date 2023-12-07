@@ -6,3 +6,4 @@ asyncio
 uwuify
 pyowm
 bs4
+python-dotenv
