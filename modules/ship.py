@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import random
+import requests
 
 class Ship(commands.Cog):
     def __init__(self, bot):
@@ -16,15 +17,22 @@ class Ship(commands.Cog):
                 user2 = random.choice(member_list)
 
         elif user1 is not None and user2 is None:
-            user2 = ctx.author  
-            
+            user2 = ctx.author
+
         percentage = random.randint(0, 100)
+        
+        hug_api_url = "https://api.waifu.pics/sfw/hug"
+        response = requests.get(hug_api_url)
+        hug_gif_url = response.json()["url"]
+
         ship_embed = discord.Embed(
             title=f"💖 Shipping {user1.display_name} and {user2.display_name}! 💖",
             color=discord.Color.magenta()
         )
         ship_embed.add_field(name="Love Percentage", value=f"{percentage}%")
         ship_embed.set_footer(text="UwU <3")
+
+        ship_embed.set_image(url=hug_gif_url)
 
         await ctx.send(embed=ship_embed)
 
