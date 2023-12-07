@@ -3,6 +3,9 @@ from discord.ext import commands
 import pyowm
 import os
 
+from dotenv import load_dotenv  
+load_dotenv()
+
 OWM_API_KEY = os.environ[OWM_API_KEY]
 
 class Weather(commands.Cog):
