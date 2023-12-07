@@ -3,6 +3,9 @@ from discord.ext import commands
 import requests
 import os
 
+from dotenv import load_dotenv  
+load_dotenv()
+
 BRAINSHOP_URL = os.environ.get('BRAINSHOP_URL')
 
 class AI(commands.Cog):
