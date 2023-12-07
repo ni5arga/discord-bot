@@ -6,7 +6,7 @@ import os
 from dotenv import load_dotenv  
 load_dotenv()
 
-OWM_API_KEY = os.environ[OWM_API_KEY]
+OWM_API_KEY = os.environ["OWM_API_KEY"]  
 
 class Weather(commands.Cog):
     def __init__(self, bot):
