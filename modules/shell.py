@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 import subprocess
 import os
+from dotenv import load_dotenv  
+load_dotenv()
 
 class Shell(commands.Cog):
     def __init__(self, bot):
