@@ -7,7 +7,6 @@ class UserInfo(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=["userinfo", "user", "info"])
-    """ Get an user's info """
     async def user_info(self, ctx, user: discord.Member = None):
         user = user or ctx.author
 
