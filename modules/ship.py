@@ -16,11 +16,11 @@ class Ship(commands.Cog):
                 user2 = random.choice(member_list)
 
         elif user1 is not None and user2 is None:
-            user2 = user1
-
+            user2 = ctx.author  
+            
         percentage = random.randint(0, 100)
         ship_embed = discord.Embed(
-            title=f"💖 Shipping {ctx.author.display_name} and {user2.display_name}! 💖",
+            title=f"💖 Shipping {user1.display_name} and {user2.display_name}! 💖",
             color=discord.Color.magenta()
         )
         ship_embed.add_field(name="Love Percentage", value=f"{percentage}%")
