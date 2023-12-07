@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 import os
+from dotenv import load_dotenv  
+load_dotenv()
 # Module probably contains some bugs, wil fix in the future.
 
 class Logging(commands.Cog):
